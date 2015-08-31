@@ -1,4 +1,4 @@
-edit test
+
 
 
 
@@ -28,7 +28,7 @@ order.eng <- eng[order(eng$ID),]
 
 
 # Pull out identifier for the loop
-EngID <- sort(unique(eng$ID))
+EngID <- eng$ID
 
 X <- matrix(0,length(EngID),max(cyear$CompCount))
 
@@ -51,8 +51,6 @@ for (i in 1:nrow(X)){
 }
 
 # Now generate complaint counts for each country year
-# This is for use in the poisson, not needed for stan_v4
-
 cyear$ID <- cyear$Year*1000+cyear$COWid
 Z <- as.data.frame(cyear[,c("ID",
                             "CompCount")])
@@ -65,7 +63,7 @@ Z <- Z$CompCount
 rm(list=setdiff(ls(),c("X","Z","EngID", "CountID","A")))
 
 # Save this as object engagement.R
-save.image("~/Google Drive/IO_latent.engage/Data/engagement_v3.Rdata")
+save.image("~/Google Drive/IO_latent.engage/Data/engagement.Rdata")
 
 
 
