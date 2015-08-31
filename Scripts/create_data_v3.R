@@ -1,4 +1,17 @@
-edit test
+################################################################################
+###
+###
+###   Code to create data object for use in Stan code.
+###   Authors: Gleason Judd, Brad Smith
+###
+###   Created: 11/12/2014
+###   Last modified: 11/12/2014
+###   
+###
+###   Purpose: In description. 
+###            
+###
+################################################################################
 
 
 
