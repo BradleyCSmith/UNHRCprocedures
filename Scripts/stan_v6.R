@@ -17,8 +17,11 @@ rm(list=ls())
 library(rstan)
 library(foreign)
 
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+
 # Set directory
-setwd("~/Google Drive/IO_latent.engage")
+setwd("~/Google Drive/Research/IO_latent.engage")
 
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
@@ -46,9 +49,9 @@ int X[N,L];      //create X, response data matrix
 }
 
 parameters{
-vector[K] B;     //set the question discrimintation parameter
+vector[K] B;     //set the question discrimination parameter
 vector[N] theta;          //set the country engagement parameter
-vector[K] alpha;              //set an intercept for the responses
+vector[K] alpha;              //set an ``difficulty" for the responses
 }
 
 transformed parameters{
@@ -56,9 +59,8 @@ vector[K] B_trans;
 vector[N] theta_trans;
 vector[K] alpha_trans;
 
-B_trans <- (B - mean(alpha)) / sd(alpha); 
+B_trans <- B * sd(alpha); 
 theta_trans <- (theta - mean(alpha)) / sd(alpha) ;
-theta_trans[586] <- -1;
 alpha_trans <- (alpha - mean(alpha)) / sd(alpha);
 }
 
@@ -69,14 +71,14 @@ alpha ~ normal(0,3);
 
 for (i in 1:N){
     for (j in 1:A[i]){
-        X[i,j] ~ categorical(softmax(alpha_trans + B_trans*theta_trans[i]));
+        X[i,j] ~ categorical_logit(B_trans*theta_trans[i] - B_trans .* alpha_trans);
     }
   }
 }
 '
-
+iter <- 30
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
-            iter = 1000,
-            chains = 2,
+            iter = iter,
+            chains = 1,
             warmup = floor(iter/3))
