@@ -52,24 +52,19 @@ vector[N] theta;          //set the country engagement parameter
 vector[K] alpha;              //set an ``difficulty" for the responses
 }
 
-transformed parameters{
-vector[K] B_trans;
-vector[N] theta_trans;
-vector[K] alpha_trans;
 
-B_trans <- B * sd(alpha); 
-theta_trans <- (theta - mean(alpha)) / sd(alpha) ;
-alpha_trans <- (alpha - mean(alpha)) / sd(alpha);
-}
 
 model{
-B ~ normal(0,3);
-theta ~ normal(0,3);
-alpha ~ normal(0,3);
+B[1] ~ lognormal(0,1);
+for(i in 2:K){
+  B[i] ~ normal(0,3);
+}
+theta ~ normal(0,1);
+alpha ~ normal(0,10);
 
 for (i in 1:N){
     for (j in 1:A[i]){
-        X[i,j] ~ categorical_logit(B_trans*theta_trans[i] - B_trans .* alpha_trans);
+        X[i,j] ~ categorical_logit(B*theta[i] - B .* alpha);
     }
   }
 }
