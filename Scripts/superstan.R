@@ -69,12 +69,12 @@ for (i in 1:N){
   }
 }
 '
-iter <- 10000
+iter <- 8000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
             chains = 3,
-            warmup = floor(iter/3))
+            warmup = floor(iter/4))
 
 #UNHRCfit <- extract(fit)
 rm(list = setdiff(ls(),c("fit")))
