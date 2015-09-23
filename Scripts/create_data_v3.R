@@ -17,7 +17,7 @@
 
 rm(list=ls())
 library(foreign)
-setwd("~/Google Drive/IO_latent.engage/Data")
+setwd("~/Google Drive/Research/IO_latent.engage")
 
 data <- read.dta("Data/IOfull.dta")
 cyear <- read.dta("Data/CtryYearIO.dta")
