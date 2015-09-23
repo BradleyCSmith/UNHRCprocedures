@@ -76,8 +76,8 @@ fit <- stan(model_code = engage.stan,
             chains = 3,
             warmup = floor(iter/3))
 
-UNHRCfit <- extract(fit)
-rm(list = setdiff(ls(),c("UNHRCfit")))
+#UNHRCfit <- extract(fit)
+rm(list = setdiff(ls(),c("fit")))
 
 save.image("Output/UNHRCfit.RData")
 
