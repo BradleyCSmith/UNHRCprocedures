@@ -59,7 +59,7 @@ matrix[I,K] alpha;              //set an ``difficulty'' for the responses, by is
 
 
 model{
-B[1] ~ lognormal(0,1);
+B[1] ~ uniform(-2,0);
 for(i in 2:K){
   B[i] ~ normal(0,3);
 }
