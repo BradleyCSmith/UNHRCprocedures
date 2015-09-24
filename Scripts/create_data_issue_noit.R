@@ -38,6 +38,8 @@ eng <- as.data.frame(cbind(data[,c("Country",
                                    "QualCode",
                                    "issue")]))
 
+# Remove all observations for which QualCode = 6, indicating in translation
+eng <- eng[eng$QualCode !=6,]
 
 # Generate country year ID, sort data by this
 eng$ID <- eng$Year*1000+eng$COWid
@@ -85,7 +87,7 @@ Z <- Z$CompCount
 rm(list=setdiff(ls(),c("X","Y","Z","EngID", "CountID","A")))
 
 # Save this as object engagement.R
-save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_issue.Rdata")
+save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_issue_noit.Rdata")
 
 
 
