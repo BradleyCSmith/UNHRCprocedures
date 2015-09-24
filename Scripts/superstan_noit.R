@@ -24,7 +24,7 @@ options(mc.cores = parallel::detectCores())
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
 
-load("engagement_issue.Rdata")
+load("engagement_v3_noit.Rdata")
 
 # Create the stan data object
 N <- nrow(X)
@@ -33,48 +33,43 @@ N <- nrow(X)
 eng.stan.data <- list(N=N,                   # Number of rows in X
                       A=A,                   # Number of responses for a c/year
                       X = X,                 # Response data matrix
-                      Y = Y,                 # Issue data matrix
-                      K = 5,                 # Number of response categories
-                      I = 17,                # Number of issue categories
+                      K = 6,                 # Number of response categories
                       L = ncol(X)            # Size of X
                       )
 
-engage.stan <- "
+engage.stan <- '
 data{
 int<lower=1> N;    //number of rows in X
 int<lower=1> L;    //number of columns of X
 int<lower=1> K;    //number of responses categories
-int<lower=1> I;    //number of issue categories
 int A[N];          //create A, number of responses for each c/year
 int X[N,L];      //create X, response data matrix
-int Y[N,L];      // create Y, issue data matrix
 }
 
 parameters{
 vector[K] B;     //set the question discrimination parameter
 vector[N] theta;          //set the country engagement parameter
-matrix[I,K] alpha;              //set an ``difficulty'' for the responses, by issue
+vector[K] alpha;              //set an ``difficulty" for the responses
 }
 
 
 
 model{
-B[1] ~ uniform(-2,0);
+B[1] ~ lognormal(0,1);
 for(i in 2:K){
   B[i] ~ normal(0,3);
 }
 theta ~ normal(0,1);
-for(i in 1:I){
-alpha[i] ~ normal(0,10);
-}
+alpha ~ normal(0,10);
+
 for (i in 1:N){
     for (j in 1:A[i]){
-        X[i,j] ~ categorical_logit(B*theta[i] - B .* alpha[Y[i,j]]');
+        X[i,j] ~ categorical_logit(B*theta[i] - B .* alpha);
     }
   }
 }
-"
-iter <- 10000
+'
+iter <- 8000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
@@ -84,5 +79,5 @@ fit <- stan(model_code = engage.stan,
 #UNHRCfit <- extract(fit)
 rm(list = setdiff(ls(),c("fit")))
 
-save.image("Output/UNHRCfit_issue.RData")
+save.image("Output/UNHRCfit.RData")
 

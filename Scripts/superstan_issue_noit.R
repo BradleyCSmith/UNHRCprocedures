@@ -24,7 +24,7 @@ options(mc.cores = parallel::detectCores())
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
 
-load("engagement_issue.Rdata")
+load("engagement_issue_noit.Rdata")
 
 # Create the stan data object
 N <- nrow(X)

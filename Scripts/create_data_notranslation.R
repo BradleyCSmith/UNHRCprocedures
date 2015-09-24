@@ -80,7 +80,7 @@ Z <- Z$CompCount
 rm(list=setdiff(ls(),c("X","Z","EngID", "CountID","A")))
 
 # Save this as object engagement.R
-save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_v4.Rdata")
+save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_v3_noit.Rdata")
 
 
 
