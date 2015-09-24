@@ -13,13 +13,14 @@
 
 rm(list=ls())
 require(foreign)
-
+require(rstan)
 ### Set WD, load in Rstan results
 setwd("~/Google Drive/Research/IO_latent.engage")
 load("Output/UNHRCfit.RData")
 load("Data/engagement_v3.RData")
 
 ### Load in full dataset to extract ID information (e.g. year, COW code)
+UNHRCfit <- extract(fit)
 data <- read.dta("Data/IOfull.dta")
 eng <- as.data.frame(cbind(data[,c("Country",
                                    "Year",
