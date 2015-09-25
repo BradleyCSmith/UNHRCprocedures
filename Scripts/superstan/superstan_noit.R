@@ -24,7 +24,7 @@ options(mc.cores = parallel::detectCores())
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
 
-load("engagement_v3.Rdata")
+load("engagement_v3_noit.Rdata")
 
 # Create the stan data object
 N <- nrow(X)
@@ -55,7 +55,7 @@ vector[K] alpha;              //set an ``difficulty" for the responses
 
 
 model{
-B[1] ~ lognormal(0,1);
+B[1] ~ uniform(-2,0);
 for(i in 2:K){
   B[i] ~ normal(0,3);
 }
