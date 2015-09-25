@@ -75,7 +75,7 @@ engsim <- function(ccode, # Cow ID
 }
 
 
-#Test it out with Nepal 2004, which has the most letters sent in data
+#Test it out with Iran 2004
 engsim(ccode = 630,
        year = 2004,
        n = 100000)
