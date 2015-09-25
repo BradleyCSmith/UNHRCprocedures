@@ -53,9 +53,11 @@ engsim <- function(ccode, # Cow ID
   simplot.data <- as.data.frame(sim)
   simplot <- ggplot(data = simplot.data,
                     aes(x = sim,
+                        y = ..count../sum(..count..),
                         fill = ..count..)) + geom_histogram(binwidth = 1,
                                                             origin = 1)
   simplot <- simplot + ggtitle(simtitle) + xlab("Simulated Response")
+  simplot <- simplot + ylab("Proportion")
   simplot <- simplot + scale_x_continuous(breaks = 0:6)
 
   
@@ -64,9 +66,11 @@ engsim <- function(ccode, # Cow ID
  obstitle <- paste("Histogram of observed responses,", country, year)
  obsplot <- ggplot(data = obs.data,
                    aes(x = observed,
+                       y = ..count../sum(..count..),
                        fill = ..count..)) + geom_histogram(binwidth = 1,
                                                            origin = 1)
  obsplot <- obsplot + ggtitle(obstitle) + xlab("Observed Response")
+ obsplot <- obsplot + ylab("Proportion")
  obsplot <- obsplot + scale_x_continuous(breaks = 0:6)
 
  # Return plots
