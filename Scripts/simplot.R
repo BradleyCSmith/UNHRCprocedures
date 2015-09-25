@@ -48,7 +48,7 @@ engsim <- function(ccode, # Cow ID
                 prob = probs)
   
   # Now make data frames and create ggplots
-  country <- output.data$Country[which(EngID == ID)]
+  country <- output.data$Country[which(output.data$EngID == ID)]
   simtitle <- paste("Histogram of simulated responses,", country, year)
   simplot.data <- as.data.frame(sim)
   simplot <- ggplot(data = simplot.data,
@@ -76,6 +76,6 @@ engsim <- function(ccode, # Cow ID
 
 
 #Test it out with Nepal 2004, which has the most letters sent in data
-engsim(ccode = 790,
+engsim(ccode = 630,
        year = 2004,
-       n = 1000)
+       n = 100000)
