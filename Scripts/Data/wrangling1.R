@@ -53,7 +53,39 @@ output.data <- merge(ID.data,
                      thetas,
                      by = intersect(names(ID.data),names(thetas)))
 
-rm(list=setdiff(ls(),"output.data"))
+# Now extract the alpha and Beta terms
+Beta_posterior <- as.data.frame(UNHRCfit[["B"]])
+alpha_posterior <- as.data.frame(UNHRCfit[["alpha"]])
+Beta_means <- colMeans(Beta_posterior)
+alpha_means <- colMeans(alpha_posterior)
+
+Beta_quant_80 <- apply(Beta_posterior,
+                       2,
+                       quantile,
+                       probs = c(.1, .9))
+Beta_quant_95 <- apply(Beta_posterior,
+                       2,
+                       quantile,
+                       probs = c(0.025, 0.975))
+
+alpha_quant_80 <- apply(alpha_posterior,
+                        2,
+                        quantile,
+                        probs = c(0.1, 0.9))
+
+alpha_quant_95 <- apply(alpha_posterior,
+                        2,
+                        quantile,
+                        probs = c(0.025, 0.975))
+
+Betas <- rbind(Beta_means, Beta_quant_80, Beta_quant_95)
+
+Betas <- as.data.frame(Betas)
+
+alphas <- rbind(alpha_means, alpha_quant_80, alpha_quant_95)
+alphas <- as.data.frame(alphas)
+
+rm(list=setdiff(ls(),c("output.data", "alphas", "Betas")))
 save.image("~/Google Drive/Research/IO_latent.engage/Output/output.data.RData")
 
 
