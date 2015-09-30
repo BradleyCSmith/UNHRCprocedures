@@ -37,7 +37,7 @@ eng.stan.data <- list(N=N,                   # Number of rows in X
                       L = ncol(X)            # Size of X
                       )
 
-engage.stan <- '
+engage.stan <- "
 data{
 int<lower=1> N;    //number of rows in X
 int<lower=1> L;    //number of columns of X
@@ -49,17 +49,17 @@ int X[N,L];      //create X, response data matrix
 parameters{
 vector[K] B;     //set the question discrimination parameter
 vector[N] theta;          //set the country engagement parameter
-vector[K] alpha;              //set an ``difficulty" for the responses
+vector[K] alpha;              //set an ``difficulty'' for the responses
 }
 
 
 
 model{
-B[1] ~ uniform(-2,0);
+B[1] ~ uniform(-3,-1);
 for(i in 2:K){
   B[i] ~ normal(0,3);
 }
-theta ~ normal(0,1);
+theta ~ normal(0,3);
 alpha ~ normal(0,10);
 
 for (i in 1:N){
@@ -68,7 +68,7 @@ for (i in 1:N){
     }
   }
 }
-'
+"
 iter <- 8000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
@@ -79,5 +79,5 @@ fit <- stan(model_code = engage.stan,
 #UNHRCfit <- extract(fit)
 rm(list = setdiff(ls(),c("fit")))
 
-save.image("Output/UNHRCfit.RData")
+save.image("Output/UNHRCfitbase.RData")
 

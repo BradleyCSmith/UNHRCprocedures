@@ -38,4 +38,4 @@ module load r/3.1.0/b2
 #     The workspace variables are stored in 
 #     UNHRCfit.RData
 
-R --save <  superstan.R 
+R --save <  superstan_noit.R 

@@ -59,11 +59,11 @@ matrix[I,K] alpha;              //set an ``difficulty'' for the responses, by is
 
 
 model{
-B[1] ~ uniform(-2,0);
+B[1] ~ uniform(-3,-1);
 for(i in 2:K){
   B[i] ~ normal(0,3);
 }
-theta ~ normal(0,1);
+theta ~ normal(0,3);
 for(i in 1:I){
 alpha[i] ~ normal(0,10);
 }
@@ -74,7 +74,7 @@ for (i in 1:N){
   }
 }
 "
-iter <- 10000
+iter <- 8000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
@@ -84,5 +84,5 @@ fit <- stan(model_code = engage.stan,
 #UNHRCfit <- extract(fit)
 rm(list = setdiff(ls(),c("fit")))
 
-save.image("Output/UNHRCfit_issue.RData")
+save.image("Output/UNHRCfit_issuenoit.RData")
 

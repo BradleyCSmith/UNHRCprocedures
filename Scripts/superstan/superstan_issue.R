@@ -34,7 +34,7 @@ eng.stan.data <- list(N=N,                   # Number of rows in X
                       A=A,                   # Number of responses for a c/year
                       X = X,                 # Response data matrix
                       Y = Y,                 # Issue data matrix
-                      K = 5,                 # Number of response categories
+                      K = 6,                 # Number of response categories
                       I = 17,                # Number of issue categories
                       L = ncol(X)            # Size of X
                       )
@@ -53,17 +53,17 @@ int Y[N,L];      // create Y, issue data matrix
 parameters{
 vector[K] B;     //set the question discrimination parameter
 vector[N] theta;          //set the country engagement parameter
-matrix[I,K] alpha;              //set an ``difficulty'' for the responses, by issue
+matrix[I,K] alpha;              //set a ``difficulty'' for the responses, by issue
 }
 
 
 
 model{
-B[1] ~ uniform(-2,0);
+B[1] ~ uniform(-3,-1);
 for(i in 2:K){
   B[i] ~ normal(0,3);
 }
-theta ~ normal(0,1);
+theta ~ normal(0,3);
 for(i in 1:I){
 alpha[i] ~ normal(0,10);
 }
@@ -74,7 +74,7 @@ for (i in 1:N){
   }
 }
 "
-iter <- 10000
+iter <- 8000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
