@@ -51,7 +51,7 @@ int Y[N,L];      // create Y, issue data matrix
 }
 
 parameters{
-vector[K] B;     //set the question discrimination parameter
+vector[K] B; 	//set discrimination parameters
 vector[N] theta;          //set the country engagement parameter
 matrix[I,K] alpha;              //set an ``difficulty'' for the responses, by issue
 }
@@ -59,13 +59,13 @@ matrix[I,K] alpha;              //set an ``difficulty'' for the responses, by is
 
 
 model{
-B[1] ~ uniform(-3,-1);
+B[1] ~ lognormal(0,1);
 for(i in 2:K){
-  B[i] ~ normal(0,3);
+B[i] ~ normal(0,3);
 }
-theta ~ normal(0,3);
+theta ~ normal(0,5);
 for(i in 1:I){
-alpha[i] ~ normal(0,10);
+alpha[i] ~ normal(0,5);
 }
 for (i in 1:N){
     for (j in 1:A[i]){
@@ -74,15 +74,15 @@ for (i in 1:N){
   }
 }
 "
-iter <- 8000
+iter <- 10000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
             chains = 3,
-            warmup = floor(iter/4))
+            warmup = floor(iter/3))
 
 #UNHRCfit <- extract(fit)
 rm(list = setdiff(ls(),c("fit")))
 
-save.image("Output/UNHRCfit_issuenoit.RData")
+save.image("Output/UNHRCfit_issuenoit1.RData")
 

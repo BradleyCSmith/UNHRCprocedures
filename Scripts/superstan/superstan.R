@@ -47,21 +47,18 @@ int X[N,L];      //create X, response data matrix
 }
 
 parameters{
-vector[K] B;     //set the question discrimination parameter
+vector[K] B;     //set the discrimination parameters
 vector[N] theta;          //set the country engagement parameter
-vector[K] alpha;              //set an ``difficulty'' for the responses
+vector[K] alpha;              //set an ``difficulty'' for the responses, by issue
 }
-
-
 
 model{
-B[1] ~ uniform(-3,-1);
+B[1] ~ lognormal(0,1);
 for(i in 2:K){
-  B[i] ~ normal(0,3);
+B[i] ~ normal(0,3);
 }
-theta ~ normal(0,3);
-alpha ~ normal(0,10);
-
+theta ~ normal(0,5);
+alpha ~ normal(0,5);
 for (i in 1:N){
     for (j in 1:A[i]){
         X[i,j] ~ categorical_logit(B*theta[i] - B .* alpha);
@@ -69,15 +66,15 @@ for (i in 1:N){
   }
 }
 "
-iter <- 8000
+iter <- 10000
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
             chains = 3,
-            warmup = floor(iter/4))
+            warmup = floor(iter/3))
 
 #UNHRCfit <- extract(fit)
 rm(list = setdiff(ls(),c("fit")))
 
-save.image("Output/UNHRCfitbase.RData")
+save.image("Output/UNHRCfitbase1.RData")
 
