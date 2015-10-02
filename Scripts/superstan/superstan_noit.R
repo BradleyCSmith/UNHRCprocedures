@@ -57,10 +57,10 @@ vector[K] alpha;              //set an difficulty for the responses
 model{
 B[1] ~ lognormal(0,1);
 for(i in 2:K){
-  B[i] ~ normal(0,3);
+  B[i] ~ normal(0,5);
 }
-theta ~ normal(0,5);
-alpha ~ normal(0,5);
+theta ~ normal(0,10);
+alpha ~ normal(0,10);
 
 for (i in 1:N){
     for (j in 1:A[i]){
