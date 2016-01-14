@@ -15,14 +15,14 @@ library(foreign)
 full.dta <- read.dta("IOfull.dta")
 
 #remove `duplicate' communications (i.e. same country, response, and dates)
-full.uniq <- full.dta[!duplicated(full.dta[c(1,6:8)]),]
+full.dta <- full.dta[!duplicated(full.dta[c(1,6:8)]),]
 
 #select variables of interest for response models.
-attach(full.uniq)
+attach(full.dta)
 fullX <- data.frame(cbind(Country, Year, COWid, BinQualCode, StateDept, pop, rgdpl2, AL, JAL, UA, JUA, StInvite, 
            CountryMandate, CtryVisit, polity2, UNHRC, ED, FOOD,	FRDX,	HLTH,
            HOUSE, HRD, IJL, IND, MIG, RACE, RINT, SALE, SUMX, TOR, TOX, TRAF,	VAW))
-detach(full.uniq)
+detach(full.dta)
 
 #read in country year dataset.
 ctryyear <- read.dta("CtryYearIO.dta")
