@@ -20,7 +20,9 @@ rm(list=ls())
 library(foreign)
 setwd("~/Google Drive/Research/IO_latent.engage")
 
-data <- read.dta("Data/IOfull.dta")
+load("Data/FullUnique.Rdata")
+
+data <- full.uniq
 cyear <- read.dta("Data/CtryYearIO.dta")
 
 

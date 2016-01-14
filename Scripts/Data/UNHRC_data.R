@@ -24,6 +24,9 @@ fullX <- data.frame(cbind(Country, Year, COWid, BinQualCode, StateDept, pop, rgd
            HOUSE, HRD, IJL, IND, MIG, RACE, RINT, SALE, SUMX, TOR, TOX, TRAF,	VAW))
 detach(full.uniq)
 
+#save full.uniq to Google Drive.
+save(full.uniq, file="FullUnique.Rdata")
+
 #read in country year dataset.
 ctryyear <- read.dta("CtryYearIO.dta")
 
