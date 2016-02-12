@@ -19,7 +19,7 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
 # Set directory
-#setwd("~/Google Drive/Research/IO_latent.engage")
+setwd("~/Google Drive/Research/IO_latent.engage/Data")
 
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
@@ -69,7 +69,7 @@ for (i in 1:N){
   }
 }
 "
-iter <- 10000
+iter <- 100
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
