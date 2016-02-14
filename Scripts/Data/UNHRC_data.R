@@ -17,6 +17,10 @@ full.dta <- read.dta("IOfull.dta")
 #remove `duplicate' communications (i.e. same country, response, and dates)
 full.uniq <- full.dta[!duplicated(full.dta[c(1,6:8)]),]
 
+#Create dataset that is subset of full.uniq (only torture responses)
+full.uniq.TOR <- subset(full.uniq,full.uniq$ResponseScore == 'TOR')
+
+
 #select variables of interest for response models.
 attach(full.uniq)
 fullX <- data.frame(cbind(Country, Year, COWid, BinQualCode, StateDept, pop, rgdpl2, AL, JAL, UA, JUA, StInvite, 
