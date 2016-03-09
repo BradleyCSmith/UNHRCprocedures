@@ -5,7 +5,7 @@
 ###   Authors: Gleason Judd, Brad Smith
 ###
 ###   Created: 11/12/2014
-###   Last modified: 11/12/2014
+###   Last modified: March 9, 2016
 ###   
 ###
 ###   Purpose: This script removes all observations in which the response
@@ -25,7 +25,11 @@ load("Data/FullUnique.Rdata")
 data <- full.uniq
 cyear <- read.dta("Data/CtryYearIO.dta")
 
-
+####### Subset full.uniq  to physical integrity violations #####
+data <- full.uniq[full.uniq$ResponseScore %in% c("TOR",
+                                                 "SUMX",
+                                                 "SALE",
+                                                 "TRAF"),]
 
 ####### Build Dataset ########
 
@@ -82,7 +86,7 @@ Z <- Z$CompCount
 rm(list=setdiff(ls(),c("X","Z","EngID", "CountID","A")))
 
 # Save this as object engagement.R
-save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_v3_noit.Rdata")
+save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_v4_noit.Rdata")
 
 
 

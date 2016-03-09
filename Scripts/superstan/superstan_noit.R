@@ -24,7 +24,7 @@ setwd("~/Google Drive/Research/IO_latent.engage/Data")
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
 
-load("engagement_v3_noit.Rdata")
+load("engagement_v4_noit.Rdata")
 
 # Create the stan data object
 N <- nrow(X)
@@ -47,7 +47,7 @@ int X[N,L];      //create X, response data matrix
 }
 
 parameters{
-vector[K] B;     //set the question discrimination parameter
+matrix[N,K] B;     //set the question discrimination parameter
 vector[N] theta;          //set the country engagement parameter
 vector[K] alpha;              //set an difficulty for the responses
 }
@@ -55,25 +55,25 @@ vector[K] alpha;              //set an difficulty for the responses
 
 
 model{
-B[1] ~ lognormal(0,1);
+col(B,1) ~ normal(0,1);
 for(i in 2:K){
-  B[i] ~ normal(0,5);
+  col(B,i) ~ normal(0,5);
 }
 theta ~ normal(0,10);
 alpha ~ normal(0,10);
 
 for (i in 1:N){
     for (j in 1:A[i]){
-        X[i,j] ~ categorical_logit(B*theta[i] - B .* alpha);
+        X[i,j] ~ categorical_logit(row(B,i)'*theta[i] - row(B,i)' .* alpha);
     }
   }
 }
 "
-iter <- 100
+iter <- 500
 fit <- stan(model_code = engage.stan,
             data = eng.stan.data,
             iter = iter,
-            chains = 3,
+            chains = 1,
             warmup = floor(iter/3))
 
 #UNHRCfit <- extract(fit)
