@@ -43,7 +43,10 @@ eng <- as.data.frame(cbind(data[,c("Country",
 eng <- eng[eng$QualCode !=6,]
 
 # Generate country year ID, sort data by this
-eng$ID <- eng$Year*1000+eng$COWid
+#eng$ID <- eng$Year*1000+eng$COWid
+
+# Change this script to just have a country identifier
+eng$ID <- eng$COWid
 order.eng <- eng[order(eng$ID),]
 
 
@@ -86,7 +89,7 @@ Z <- Z$CompCount
 rm(list=setdiff(ls(),c("X","Z","EngID", "CountID","A")))
 
 # Save this as object engagement.R
-save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_v4_noit.Rdata")
+save.image("~/Google Drive/Research/IO_latent.engage/Data/engagement_v5_noit.Rdata")
 
 
 

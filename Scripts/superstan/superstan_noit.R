@@ -24,7 +24,7 @@ setwd("~/Google Drive/Research/IO_latent.engage/Data")
 ### Load in data, this uses the third version of the data, created in
 ### the script create_data_vs.R
 
-load("engagement_v4_noit.Rdata")
+load("engagement_v5_noit.Rdata")
 
 # Create the stan data object
 N <- nrow(X)
